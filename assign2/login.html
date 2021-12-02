@@ -1,0 +1,71 @@
+<html>
+    <head>
+        <title>
+            Login Form Using local storage js-part3
+        </title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+      </head>
+      <body>
+      
+      <div class="container">
+        <h2>Login Form</h2>
+        <form action="#">
+          <span id="error"></span>
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+            <span id="emailerror" ></span>
+          </div>
+          <div class="form-group">
+            <label for="pwd">Password:</label>
+            <input type="password" class="form-control" id="psw" placeholder="Enter password" name="pwd">
+           
+          </div>
+         
+          <button type="button" onclick="saveData()" id="save_btn" class="btn btn-default">Submit</button>
+        </form>
+      </div>
+      
+      </body>
+      <script>
+         let name=localStorage.getItem('fname')?localStorage.getItem('fname'):''
+        console.log(name);
+        if(name!='')
+        {
+          alert('Please visit profile');
+          window.location.href="profile.html";
+        }
+function saveData()
+{
+let email,psw;
+var error = document.getElementById('error');
+var message = document.getElementById('message')
+var emailerror= document.getElementById('emailerror');
+email=document.getElementById("email").value;
+
+psw=document.getElementById("psw").value;
+
+let user_records=new Array();
+user_records=JSON.parse(localStorage.getItem("users"))?JSON.parse(localStorage.getItem("users")):[]
+if(user_records.some((v)=>{return v.email==email && v.psw==psw}))
+{
+  
+  let current_user=user_records.filter((v)=>{return v.email==email && v.psw==psw})[0]
+ localStorage.setItem('fname',current_user.fname);
+ localStorage.setItem('email',current_user.email);
+  window.location.href="profile.html"
+}
+else
+{
+ 
+ error.innerHTML="<span style='color:red;'>"+"Invalid credential</span>";
+
+}
+
+}
+          </script>
+      </html>
